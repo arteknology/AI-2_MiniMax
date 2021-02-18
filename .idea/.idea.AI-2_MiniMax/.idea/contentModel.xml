@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\arthur.hauton\AI-2_MiniMax" t="IncludeRecursive">
+      <e p="AI-2_MiniMax.sln" t="IncludeFlat" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Scripts" t="Include">
+          <e p="GameManager.cs" t="Include" />
+          <e p="GameSet" t="Include">
+            <e p="Board.cs" t="Include" />
+            <e p="Coord.cs" t="Include" />
+            <e p="Lady.cs" t="Include" />
+            <e p="Pawn.cs" t="Include" />
+            <e p="Piece.cs" t="Include" />
+          </e>
+          <e p="MiniMax" t="Include">
+            <e p="AI.cs" t="Include" />
+            <e p="Node.cs" t="Include" />
+          </e>
+          <e p="Players" t="Include">
+            <e p="PlayerColor.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+    </e>
+    <e p="C:\Users\arthur.hauton\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\arthur.hauton\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_AI-2_MiniMax.-550393436.00" t="ExcludeRecursive" />
+  </component>
+</project>

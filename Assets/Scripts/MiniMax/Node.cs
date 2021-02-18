@@ -31,21 +31,7 @@ namespace MiniMax
             }
         }
 
-        public List<Node> Childs
-        {
-            get
-            {
-                List<Node> childs = new List<Node>();
-                foreach (Piece availablePiece in Board.AvailablePieces(PlayerColor))
-                {
-                    foreach (Coord availableMove in availablePiece.AvailableMoves(Board))
-                    {
-                        childs.Add(new Node(Board, PlayerColor, availablePiece.CurrentCoord, availableMove));
-                    }
-                }
-                return childs;
-            }
-        }
-
+        public List<Node> Childs => (from availablePiece in Board.AvailablePieces(PlayerColor) from availableMove in availablePiece.AvailableMoves(Board) 
+                select new Node(Board, PlayerColor, availablePiece.CurrentCoord, availableMove)).ToList();
     }
 }

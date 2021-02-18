@@ -8,19 +8,13 @@ namespace GameSet
 {
     public class Board : ICloneable
     {
-        public Piece[,] Matrix = new Piece[0,0];
+        public Piece[,] Matrix = new Piece[8,8];
 
         public List<Piece> Pieces
         {
             get
             {
-                List<Piece> pieces = new List<Piece>();
-                foreach (Piece piece in Matrix)
-                {
-                    pieces.Add(piece);
-                }
-
-                return pieces;
+                return Matrix.Cast<Piece>().ToList();
             }
         }
 
@@ -28,8 +22,6 @@ namespace GameSet
         {
             Matrix = new Piece[,]
             {
-                
-
                 {new Pawn(PlayerColor.White, new Coord(0,2)), null, new Pawn(PlayerColor.White, new Coord(2,2)), null, new Pawn(PlayerColor.White, new Coord(4,2)), null, new Pawn(PlayerColor.White, new  Coord(6,2)), null},
                 {null, new Pawn(PlayerColor.White, new Coord(1,1)), null, new Pawn(PlayerColor.White, new Coord(3,1)), null, new Pawn(PlayerColor.White, new Coord(5,1)), null, new Pawn(PlayerColor.White, new  Coord(7,1))},
                 {new Pawn(PlayerColor.White, new Coord(0,0)), null, new Pawn(PlayerColor.White, new Coord(2,0)), null, new Pawn(PlayerColor.White, new Coord(4,0)), null, new Pawn(PlayerColor.White, new  Coord(6,0)), null},
@@ -56,12 +48,30 @@ namespace GameSet
             {
                 for (int j = 0; j < Matrix.GetLength(1); j++)
                 {
-                    if (Matrix[i, j] != null) board.Matrix[i, j] = (Piece) Matrix[i, j].Clone();
+                    if (Matrix[i, j] != null) board.Matrix[i, j] = (Piece)Matrix[i, j].Clone();
                 }
             }
             return board;
         }
 
+        public bool ValidCoord(Coord coord)
+        {
+            return coord.X < Matrix.GetLength(0) && coord.X >= 0 && 
+                coord.Y < Matrix.GetLength(1) && coord.Y >= 0;
+        }
+
+        public bool OccupiedCoord(Coord coord)
+        {
+            if (ValidCoord(coord))
+            {
+                return Matrix[coord.X, coord.Y] != null;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
         public Piece GetPiece(Coord originMove)
         {
             Piece piece = Matrix[originMove.X, originMove.Y];

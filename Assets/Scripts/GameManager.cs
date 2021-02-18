@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Players;
 using UnityEngine;
 using GameSet;
+using MiniMax;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,14 +19,39 @@ public class GameManager : MonoBehaviour
     public Transform PiecesContent;
     public Board Board = new Board();
 
+    private AI _whiteAI;
+    private AI _redAI;
+    private bool _isWhiteTurn = true;
+
     private void Awake()
     {
         GenerateMatrix();
         Board.BoardSetup();
-        //CreateAI();
+        CreateAI();
         UpdatePhysicalBoard();
     }
-    
+
+    private void Update()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            if (_isWhiteTurn)
+            {
+                _whiteAI.Calculate();
+                _whiteAI.Play();
+                _isWhiteTurn = false;
+                UpdatePhysicalBoard();
+            }
+            else
+            {
+                _redAI.Calculate();
+                _redAI.Play();
+                _isWhiteTurn = true;
+                UpdatePhysicalBoard();
+            }
+        }
+    }
+
     private void GenerateMatrix()
     {
         PhysicalMatrix = new Transform[(int) Mathf.Sqrt(PosList.Count), (int) Mathf.Sqrt(PosList.Count)];
@@ -40,7 +66,8 @@ public class GameManager : MonoBehaviour
     
     private void CreateAI()
     {
-        throw new NotImplementedException();
+        _whiteAI = new AI(Board, PlayerColor.White);
+        _redAI = new AI(Board, PlayerColor.Red);
     }
 
     private void UpdatePhysicalBoard()
