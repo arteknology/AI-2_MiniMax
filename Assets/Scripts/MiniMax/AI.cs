@@ -28,12 +28,12 @@ namespace MiniMax
             {
                 foreach (Coord availableMove in piece.AvailableMoves(Board))
                 {
-                    //Debug.Log("Piece in: "+piece.CurrentCoord.X +","+ piece.CurrentCoord.Y +" can go to: "+availableMove.X +","+availableMove.Y);
                     Node node = new Node(Board, PlayerColor, piece.CurrentCoord, availableMove);
                     //USE AlphaBeta-MINIMAX
                     int result = AlphaBetaMiniMax(node, Depth, int.MinValue, int.MaxValue, false);
                     //USE MINIMAX
                     //int result = Minimax(node, Depth, false);
+                    Debug.Log("From: "+piece.CurrentCoord.X +","+ piece.CurrentCoord.Y +" To: "+availableMove.X +","+availableMove.Y+" With Heuristic Value: "+result);
                     _Results.Add(node, result);
                 }
             }

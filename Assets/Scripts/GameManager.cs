@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         CreateAI();
         UpdatePhysicalBoard();
         _whitePieces = Board.PlayerPieces(PlayerColor.White).Count;
-        _redPieces = Board.PlayerPieces(PlayerColor.White).Count;
+        _redPieces = Board.PlayerPieces(PlayerColor.Red).Count;
     }
 
     private void Update()

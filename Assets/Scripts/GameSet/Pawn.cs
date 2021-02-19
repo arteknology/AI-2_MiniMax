@@ -18,10 +18,10 @@ namespace GameSet
             int yDist = CurrentCoord.Y - destination.Y;
             if (Mathf.Abs(xDist) == 2 && Mathf.Abs(yDist) == 2)
             {
-                return 1;
+                return Mathf.Abs(xDist + yDist);
             }
     
-            return 0;
+            return Mathf.Abs(yDist- xDist);
         }
 
         public override List<Coord> AvailableMoves(Board board)
