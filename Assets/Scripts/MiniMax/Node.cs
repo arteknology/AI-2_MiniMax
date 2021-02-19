@@ -20,7 +20,6 @@ namespace MiniMax
             OriginMove = originMove;
             DestMove = destMove;
             HeuristicValue = board.GetPiece(OriginMove).EvaluateMove(board, destMove);
-            board.GetPiece(originMove).ExecuteMove(board, destMove);
         }
 
         public bool IsTerminal

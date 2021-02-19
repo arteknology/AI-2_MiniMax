@@ -13,7 +13,7 @@ namespace MiniMax
         public Board Board;
         public int Depth = 2;
         
-        private Dictionary<Node, int> _alphabetaResults = new Dictionary<Node, int>();
+        private Dictionary<Node, int> _Results = new Dictionary<Node, int>();
         
         public AI(Board board, PlayerColor playerColor)
         {
@@ -23,26 +23,29 @@ namespace MiniMax
 
         public void Calculate()
         {
-            _alphabetaResults.Clear();
+            _Results.Clear();
             foreach (Piece piece in Board.AvailablePieces(PlayerColor))
             {
                 foreach (Coord availableMove in piece.AvailableMoves(Board))
                 {
-                    Debug.Log("Piece in: "+piece.CurrentCoord.X +","+ piece.CurrentCoord.Y +" can go to: "+availableMove.X +","+availableMove.Y);
+                    //Debug.Log("Piece in: "+piece.CurrentCoord.X +","+ piece.CurrentCoord.Y +" can go to: "+availableMove.X +","+availableMove.Y);
                     Node node = new Node(Board, PlayerColor, piece.CurrentCoord, availableMove);
-                    int result = AlphaBetaMinMax(node, Depth, int.MinValue, int.MaxValue, false);
-                    _alphabetaResults.Add(node, result);
+                    //USE AlphaBeta-MINIMAX
+                    int result = AlphaBetaMiniMax(node, Depth, int.MinValue, int.MaxValue, false);
+                    //USE MINIMAX
+                    //int result = Minimax(node, Depth, false);
+                    _Results.Add(node, result);
                 }
             }
         }
 
         public void Play()
         {
-            KeyValuePair<Node, int> first = _alphabetaResults.OrderByDescending(pair => pair.Value).First();
+            KeyValuePair<Node, int> first = _Results.OrderByDescending(pair => pair.Value).First();
             Board.GetPiece(first.Key.OriginMove).ExecuteMove(Board, first.Key.DestMove);
         }
 
-        //MINMAX
+        //MINIMAX
         private int Minimax(Node node, int depth, bool isMax)
         {
             if (depth == 0 && node.IsTerminal)
@@ -65,8 +68,8 @@ namespace MiniMax
             }
         }
         
-        //AlphaBeta MINMAX
-        private int AlphaBetaMinMax(Node node, int depth, int alpha, int beta, bool isMax) {
+        //AlphaBeta-MINIMAX
+        private int AlphaBetaMiniMax(Node node, int depth, int alpha, int beta, bool isMax) {
             if (depth == 0 || node.IsTerminal) {
                 return node.HeuristicValue;
             }
@@ -74,7 +77,7 @@ namespace MiniMax
             if (isMax) {
                 value = int.MinValue;
                 foreach (Node child in node.Childs) {
-                    value = Mathf.Max(value, AlphaBetaMinMax(child, depth - 1, alpha, beta, false));
+                    value = Mathf.Max(value, AlphaBetaMiniMax(child, depth - 1, alpha, beta, false));
                     if (value >= beta) return value + node.HeuristicValue;
                     alpha = Mathf.Max(alpha, value);
                 }
@@ -82,7 +85,7 @@ namespace MiniMax
             else {
                 value = int.MaxValue;
                 foreach (Node child in node.Childs) {
-                    value = Mathf.Min(value, AlphaBetaMinMax(child, depth - 1, alpha, beta, true));
+                    value = Mathf.Min(value, AlphaBetaMiniMax(child, depth - 1, alpha, beta, true));
                     if (alpha >= value) return value + node.HeuristicValue;
                     beta = Mathf.Min(beta, value);
                 }
